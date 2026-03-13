@@ -1,16 +1,10 @@
-import { Component, Pipe, PipeTransform, inject } from '@angular/core';
+import { Component, Pipe, PipeTransform, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment.development';
-
-// Requisito: Uso de Interfaces (evitar any)
-interface Processo {
-  id: number;
-  numero: string;
-  cliente: string;
-  status: string;
-}
+import { ProcessoService } from './processo.service';
+import { Processo } from './processo.model';
 
 @Pipe({
   name: 'saudacao',
@@ -33,74 +27,116 @@ export class SaudacaoPipe implements PipeTransform {
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class AppComponent {
-  router = inject(Router);
+export class AppComponent implements OnInit {
+  // Injeções de dependência
+  public router = inject(Router);
+  public readonly processoService = inject(ProcessoService);
 
+  // --- ESTADO DA APLICAÇÃO ---
+  isLogado = false;
+  modoRegisto = false; // Controla se mostra Login ou Registo no HTML
+  usuarioLogin = '';
+  senhaLogin = '';
+
+  // --- DADOS DO UTILIZADOR E PROCESSOS ---
   dataDeHoje: string = new Date().toLocaleDateString('pt-PT');
-  nomeUsuario = ', Jessica';
-  processoSendoEditado: Processo | null = null;
+  nomeUsuario = '';
+  listaDeProcessos: Processo[] = [];
 
-  termoPesquisa = '';
-  filtroStatusLista = 'Todos';
+  ngOnInit() {
+    // A aplicação começa no ecrã de login
+  }
 
-  listaDeProcessos: Processo[] = [
-    { id: 1, numero: '2026-001', cliente: 'Arasaka Ltd', status: 'Novo' },
-    { id: 2, numero: '2026-002', cliente: 'Michael Sullivan', status: 'Ativo' },
-    { id: 3, numero: '2026-003', cliente: 'Weyland Corp', status: 'Concluído' },
-  ];
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
- /* constructor(...args: unknown[]);
-
-  constructor() {}
-*/
-  get listaFiltrada() {
-    let lista = [...this.listaDeProcessos];
-    const urlParts = this.router.url.split('/');
-    const filtroRota = decodeURIComponent(urlParts[urlParts.length - 1] || '');
-
-    if (filtroRota !== 'todos' && filtroRota !== 'dashboard' && filtroRota !== '') {
-      lista = lista.filter((p) => p.status === filtroRota);
-    } else if (filtroRota === 'todos' && this.filtroStatusLista !== 'Todos') {
-      lista = lista.filter((p) => p.status === this.filtroStatusLista);
+  // --- FUNÇÃO DE LOGIN (Procura no db.json) ---
+  async fazerLogin() {
+    if (!this.usuarioLogin || !this.senhaLogin) {
+      alert('Por favor, preencha todos os campos.');
+      return;
     }
 
-    if (this.termoPesquisa) {
-      const termo = this.termoPesquisa.toLowerCase();
-      lista = lista.filter(
-        (p) => p.cliente.toLowerCase().includes(termo) || p.numero.toLowerCase().includes(termo),
-      );
+    try {
+      const response = await fetch(`${environment.apiUrl}/usuarios?username=${this.usuarioLogin}&password=${this.senhaLogin}`);
+      const usuarios = await response.json();
+
+      if (usuarios && usuarios.length > 0) {
+        this.isLogado = true;
+        this.nomeUsuario = `, ${usuarios[0].username}`;
+        this.carregarDados(); // Carrega os processos após login com sucesso
+      } else {
+        alert('Utilizador ou senha incorretos!');
+      }
+    } catch (error) {
+      alert('Erro ao ligar ao servidor (db.json). Verifique o json-server.');
     }
-    return lista;
   }
 
-  // KPIs calculados em tempo real (Requisito I)
-  get total() {
-    return this.listaDeProcessos.length;
-  }
-  get novos() {
-    return this.listaDeProcessos.filter((p) => p.status === 'Novo').length;
-  }
-  get ativos() {
-    return this.listaDeProcessos.filter((p) => p.status === 'Ativo').length;
-  }
-  get concluidos() {
-    return this.listaDeProcessos.filter((p) => p.status === 'Concluído').length;
+  // --- FUNÇÃO DE REGISTO (Guarda no db.json) ---
+  async criarConta() {
+    if (!this.usuarioLogin || !this.senhaLogin) {
+      alert('Preencha os dados para criar a conta.');
+      return;
+    }
+
+    try {
+      // 1. Verifica se o utilizador já existe
+      const check = await fetch(`${environment.apiUrl}/usuarios?username=${this.usuarioLogin}`);
+      const existentes = await check.json();
+
+      if (existentes.length > 0) {
+        alert('Este nome de utilizador já está ocupado.');
+        return;
+      }
+
+      // 2. Envia os dados para o db.json usando POST
+      await fetch(`${environment.apiUrl}/usuarios`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: this.usuarioLogin,
+          password: this.senhaLogin
+        })
+      });
+
+      alert('Conta criada com sucesso! Já pode fazer o login.');
+      this.modoRegisto = false; // Volta para o ecrã de login
+      this.senhaLogin = '';     // Limpa a senha por segurança
+    } catch (error) {
+      alert('Erro ao registar o utilizador.');
+    }
   }
 
-  // Lógica de Exportação
+  // --- FUNÇÃO DE LOGOUT ---
+  sair() {
+    this.isLogado = false;
+    this.usuarioLogin = '';
+    this.senhaLogin = '';
+    this.nomeUsuario = '';
+    this.router.navigate(['/']); // Opcional: volta para a rota raiz
+  }
+
+  // --- CARREGAMENTO DE DADOS (KPIs) ---
+  async carregarDados() {
+    try {
+      const response = await fetch(`${environment.apiUrl}/processos`);
+      if (response.ok) {
+        this.listaDeProcessos = await response.json();
+      } else {
+        // Fallback para o LocalStorage via Service
+        this.processoService.processos$.subscribe(p => this.listaDeProcessos = p);
+      }
+    } catch {
+      this.processoService.processos$.subscribe(p => this.listaDeProcessos = p);
+    }
+  }
+
+  // Funções de exportação chamadas pelos botões do HTML
   exportarJSON() {
-    const data = JSON.stringify(this.listaDeProcessos, null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
+    const blob = this.processoService.exportarJsonBlob();
     this.baixarArquivo(blob, 'processos.json');
   }
 
   exportarExcel() {
-    let csv = 'ID;Numero;Cliente;Status\n';
-    this.listaDeProcessos.forEach((p) => {
-      csv += `${p.id};${p.numero};${p.cliente};${p.status}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = this.processoService.exportarCsvBlob();
     this.baixarArquivo(blob, 'processos.csv');
   }
 
@@ -112,55 +148,4 @@ export class AppComponent {
     link.click();
     window.URL.revokeObjectURL(url);
   }
-
-  salvarProcesso(cliente: string, numero: string, status: string) {
-    if (cliente && numero) {
-      this.listaDeProcessos.push({ id: Date.now(), cliente, numero, status });
-      this.router.navigate(['/dashboard']);
-    }
-  }
-
-  excluirProcesso(id: number) {
-    if (confirm('Deseja excluir?'))
-      this.listaDeProcessos = this.listaDeProcessos.filter((p) => p.id !== id);
-  }
-
-  iniciarEdicao(p: Processo) {
-    this.processoSendoEditado = { ...p };
-  }
-
-  atualizarProcesso() {
-    if (this.processoSendoEditado) {
-      const i = this.listaDeProcessos.findIndex((p) => p.id === this.processoSendoEditado?.id);
-      if (i !== -1) {
-        this.listaDeProcessos[i] = this.processoSendoEditado;
-        this.processoSendoEditado = null;
-      }
-    }
-  }
-
-  cancelarEdicao() {
-    this.processoSendoEditado = null;
-  }
-
-  
-// ... resto do código anterior ...
-
-  // Em classes, não usamos a palavra "function"
-  async carregarUsuarios() {
-    try {
-      // Usamos 'this' se quisermos guardar os dados, mas para o fetch:
-      const response = await fetch(`${environment.apiUrl}/users`);
-      const users = await response.json();
-      console.log('Utilizadores carregados:', users);
-    } catch (erro) {
-      console.error('Erro ao carregar utilizadores:', erro);
-    }
-  }
-
-  // O Angular tem um "lugar certo" para disparar funções ao abrir a página
-  ngOnInit() {
-    this.carregarUsuarios();
-  }
-} // Fecho da classe
-
+}

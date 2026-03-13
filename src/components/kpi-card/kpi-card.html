@@ -1,0 +1,13 @@
+<a class="kpi-card" [ngClass]="bgClass" [routerLink]="link">
+  <small>{{ title }}</small>
+  <h2>{{ value }}</h2>
+  <span>{{ subtitle }}</span>
+</a>
+
+<!-- Este arquivo define o template HTML do componente KPI Card.
+Ele mostra um cartão com título, valor e subtítulo, recebidos através de @Input.
+O cartão também utiliza ngClass para aplicar estilos dinâmicos e 
+routerLink para permitir navegação entre páginas quando clicado.
+
+O componente utiliza binding de propriedades ([routerLink], 
+[ngClass]) e interpolação ({{ }}) para renderizar dados dinamicamente.-->

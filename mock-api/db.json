@@ -1,6 +1,10 @@
 {
-  "users": [
-    { "id": 1, "name": "Libertino" },
-    { "id": 2, "name": "Evaristo" }
+  "processos": [ ],
+
+
+  "usuarios": [
+
+    { "id": 1, "username": "Jessica", "password": "123" },
+    { "id": 1, "username": "Estagiario", "password": "321" }
   ]
 }
