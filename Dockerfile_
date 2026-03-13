@@ -1,0 +1,14 @@
+FROM node:20-alpine
+#imagem base 
+
+#diretoria de trabalho - onde correm os scripts - run
+WORKDIR /usr/src/app
+
+COPY . .
+
+#corre o npm install - instala os packages enquanto faz o build
+RUN npm install
+
+#Comandos a correr no fim do build 
+CMD ["sh"]
+
