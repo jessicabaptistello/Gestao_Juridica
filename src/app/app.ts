@@ -29,8 +29,6 @@ export class SaudacaoPipe implements PipeTransform {
   styleUrl: './app.css',
 })
 export class AppComponent implements OnInit {
-
-
   private supabase: SupabaseClient = createClient(
     environment.supabaseUrl,
     environment.supabaseKey
@@ -44,13 +42,14 @@ export class AppComponent implements OnInit {
   utilizadorLogin = '';
   senhaLogin = '';
 
- 
   dataDeHoje: string = new Date().toLocaleDateString('pt-PT');
   nomeutilizador = '';
+  
   listaDeProcessos: Processo[] = [];
 
   ngOnInit() {
-   
+
+    this.carregarDados();
   }
 
   async fazerLogin() {
@@ -60,60 +59,59 @@ export class AppComponent implements OnInit {
     }
 
     try {
-      const response = await fetch(`${environment.apiUrl}/utilizador?username=${this.utilizadorLogin}&password=${this.senhaLogin}`);
-      const utilizador = await response.json();
+      const { data: utilizadores, error } = await this.supabase
+        .from('utilizadores')
+        .select('*')
+        .eq('username', this.utilizadorLogin.trim())
+        .eq('password', this.senhaLogin.trim());
 
-      if (utilizador && utilizador.length > 0) {
+      if (error) throw error;
+
+      if (utilizadores && utilizadores.length > 0) {
         this.isLogado = true;
-        this.nomeutilizador = `, ${utilizador[0].username}`;
+        this.nomeutilizador = `, ${utilizadores[0].username}`;
         this.carregarDados(); 
       } else {
         alert('Utilizador ou senha incorretos!');
       }
     } catch (error) {
-      alert('Erro.');
+      console.error(error);
+      alert('Erro ao tentar fazer login.');
     }
   }
 
-
-async criarConta() {
-  if (!this.utilizadorLogin || !this.senhaLogin) {
-    alert('Preencha os dados para criar a conta.');
-    return;
-  }
-
-  try {
-  
-    const { data: existentes } = await this.supabase
-      .from('utilizadores')
-      .select('*')
-      .eq('username', this.utilizadorLogin);
-
-    if (existentes && existentes.length > 0) {
-      alert('Este nome de utilizador já está ocupado.');
+  async criarConta() {
+    if (!this.utilizadorLogin || !this.senhaLogin) {
+      alert('Preencha os dados para criar a conta.');
       return;
     }
 
-   
-    const { error } = await this.supabase
-      .from('utilizadores')
-      .insert([
-        { username: this.utilizadorLogin, password: this.senhaLogin }
-      ]);
+    try {
+      const { data: existentes } = await this.supabase
+        .from('utilizadores')
+        .select('*')
+        .eq('username', this.utilizadorLogin.trim());
 
-    if (error) throw error;
+      if (existentes && existentes.length > 0) {
+        alert('Este nome de utilizador já está ocupado.');
+        return;
+      }
 
-    alert('Conta criada com sucesso no Supabase! Já pode fazer o login.');
-    this.modoRegisto = false;
-    this.senhaLogin = '';
-    
-  } catch (error) {
-    console.error(error);
-    alert('Erro ao registar o utilizador.');
+      const { error } = await this.supabase
+        .from('utilizadores')
+        .insert([{ username: this.utilizadorLogin.trim(), password: this.senhaLogin.trim() }]);
+
+      if (error) throw error;
+
+      alert('Conta criada com sucesso! Já pode fazer o login.');
+      this.modoRegisto = false;
+      this.senhaLogin = '';
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao registar o utilizador.');
+    }
   }
-}
 
- 
   sair() {
     this.isLogado = false;
     this.utilizadorLogin = '';
@@ -122,22 +120,13 @@ async criarConta() {
     this.router.navigate(['/']); 
   }
 
-  
-  async carregarDados() {
-    try {
-      const response = await fetch(`${environment.apiUrl}/processos`);
-      if (response.ok) {
-        this.listaDeProcessos = await response.json();
-      } else {
-        
-        this.processoService.processos$.subscribe(p => this.listaDeProcessos = p);
-      }
-    } catch {
-      this.processoService.processos$.subscribe(p => this.listaDeProcessos = p);
-    }
+  carregarDados() {
+    
+    this.processoService.processos$.subscribe(p => {
+      this.listaDeProcessos = p;
+    });
   }
 
- 
   exportarJSON() {
     const blob = this.processoService.exportarJsonBlob();
     this.baixarArquivo(blob, 'processos.json');
