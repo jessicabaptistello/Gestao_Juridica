@@ -1,26 +1,26 @@
 name: CI - Verificacao
 
 on:
-  pull_request:
-    branches: [ main, develop ]
   push:
+    branches: [ main, develop ]
+  pull_request:
     branches: [ main, develop ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
-        cache: 'npm'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: npm ci # O 'npm ci' é mais limpo para servidores de CI
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
 
-    - name: Build project
-      run: npx ng build --configuration production
+      - name: Build
+        run: npm run build
+
+        
