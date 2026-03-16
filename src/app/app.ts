@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment.development';
 import { ProcessoService } from './processo.service';
 import { Processo } from './processo.model';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Pipe({
   name: 'saudacao',
@@ -29,9 +30,14 @@ export class SaudacaoPipe implements PipeTransform {
 })
 export class AppComponent implements OnInit {
 
+
+  private supabase: SupabaseClient = createClient(
+    environment.supabaseUrl,
+    environment.supabaseKey
+  );
+
   public router = inject(Router);
   public readonly processoService = inject(ProcessoService);
-
 
   isLogado = false;
   modoRegisto = false; 
@@ -46,7 +52,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
    
   }
-
 
   async fazerLogin() {
     if (!this.utilizadorLogin || !this.senhaLogin) {
@@ -71,39 +76,42 @@ export class AppComponent implements OnInit {
   }
 
 
-  async criarConta() {
-    if (!this.utilizadorLogin || !this.senhaLogin) {
-      alert('Preencha os dados para criar a conta.');
+async criarConta() {
+  if (!this.utilizadorLogin || !this.senhaLogin) {
+    alert('Preencha os dados para criar a conta.');
+    return;
+  }
+
+  try {
+  
+    const { data: existentes } = await this.supabase
+      .from('utilizadores')
+      .select('*')
+      .eq('username', this.utilizadorLogin);
+
+    if (existentes && existentes.length > 0) {
+      alert('Este nome de utilizador já está ocupado.');
       return;
     }
 
-    try {
-      
-      const check = await fetch(`${environment.apiUrl}/utilizador?username=${this.utilizadorLogin}`);
-      const existentes = await check.json();
+   
+    const { error } = await this.supabase
+      .from('utilizadores')
+      .insert([
+        { username: this.utilizadorLogin, password: this.senhaLogin }
+      ]);
 
-      if (existentes.length > 0) {
-        alert('Este nome de utilizador já está ocupado.');
-        return;
-      }
+    if (error) throw error;
 
-      
-      await fetch(`${environment.apiUrl}/utilizador`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: this.utilizadorLogin,
-          password: this.senhaLogin
-        })
-      });
-
-      alert('Conta criada com sucesso! Já pode fazer o login.');
-      this.modoRegisto = false; 
-      this.senhaLogin = '';     
-    } catch (error) {
-      alert('Erro ao registar o utilizador.');
-    }
+    alert('Conta criada com sucesso no Supabase! Já pode fazer o login.');
+    this.modoRegisto = false;
+    this.senhaLogin = '';
+    
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao registar o utilizador.');
   }
+}
 
  
   sair() {
