@@ -148,7 +148,7 @@ Vantagens:
 ## 1️⃣ Clonar repositório
 
 ```bash
-git clone https://github.com/jessicabaptistello/projetoFinal.git
+git clone XXX
 ```
 
 ---
@@ -156,7 +156,7 @@ git clone https://github.com/jessicabaptistello/projetoFinal.git
 ## 2️⃣ Entrar na pasta do projeto
 
 ```bash
-cd projetoFinal
+cd XXX
 ```
 
 ---
@@ -190,7 +190,7 @@ http://localhost:4200
 ## Construir imagem
 
 ```bash
-docker build -t projeto-final .
+docker build -t XXX
 ```
 
 ---
@@ -198,7 +198,7 @@ docker build -t projeto-final .
 ## Executar container
 
 ```bash
-docker run -p 4200:4200 projeto-final
+docker run -p 4200:4200 XX
 ```
 
 ---
