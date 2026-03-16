@@ -1,0 +1,17 @@
+{
+  "processos": [],
+  "utilizador": [
+    {
+      "id": 1,
+      "username": "Jessica",
+      "password": "123"
+    },
+    {
+      "id": 2,
+      "username": "Estagiario",
+      "password": "321"
+    }
+  ]
+}
+
+
