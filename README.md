@@ -238,7 +238,7 @@ src/
 
 ---
 
-# 🔮 Funcionalidades Futuras
+# Funcionalidades Futuras
 
 * Autenticação na página inicial
 * Perfis de utilizador
