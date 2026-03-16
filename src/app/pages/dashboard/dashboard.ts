@@ -37,21 +37,13 @@ export class DashboardPageComponent {
 
   constructor() {
 
-    
-    this.processoService.processos$.subscribe(lista => {
-
-      
+    this.processoService.processos$.subscribe(lista => { 
       this.processos = lista;
-
-      
       this.total = lista.length;
-
-      
       this.processosNovos = lista.filter(p => p.status === 'Novo');
       this.processosAtivos = lista.filter(p => p.status === 'Ativo');
       this.processosConcluidos = lista.filter(p => p.status === 'Concluído');
 
-      
       this.novos = this.processosNovos.length;
       this.ativos = this.processosAtivos.length;
       this.concluidos = this.processosConcluidos.length;
