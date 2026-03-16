@@ -21,12 +21,3 @@ export class StatusBadgeComponent {
     };
   }
 }
-
-/* O StatusBadgeComponent é um componente reutilizável que exibe o estado de um processo.
-Ele recebe o status através de @Input e aplica classes CSS dinamicamente 
-utilizando um getter que retorna as classes com base no valor do status.
-
-Este componente é um ótimo exemplo de boas práticas Angular:
-componente reutilizável, @Input, classes dinâmicas, tipagem TypeScript, arquitetura modular
-
-*/

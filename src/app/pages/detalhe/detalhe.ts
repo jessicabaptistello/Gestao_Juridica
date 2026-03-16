@@ -29,13 +29,3 @@ export class DetalhePageComponent {
     });
   }
 }
-
-// Ver detalhes de um processo
-
-/*
-1️⃣ Ler o ID do processo na URL
-2️⃣ Buscar os dados do processo no ProcessoService
-3️⃣ Guardar o processo na variável processo
-4️⃣ Mostrar os dados no HTML (detalhe.html)
-
-*/

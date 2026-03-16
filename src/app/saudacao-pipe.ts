@@ -2,7 +2,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'saudacao',
-  // standalone: true
 })
 export class SaudacaoPipe implements PipeTransform {
   transform(nome: string): string {

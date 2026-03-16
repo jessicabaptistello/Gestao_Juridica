@@ -16,14 +16,3 @@ export class KpiCardComponent {
   @Input() link: any[] | string = '/';
   @Input() bgClass: 'bg-total' | 'bg-novo' | 'bg-ativo' | 'bg-concluido' = 'bg-total';
 }
-
-// KPI: Key Performance Indicator
-// No seu sistema ele mostra métricas como: total de processos, processos ativos, processos concluídos
-
-// Este componente cria um cartão de indicadores (KPI) usado no dashboard da aplicação.
-// Ele é reutilizável e recebe dados através de @Input, como título, valor, subtítulo,
-// link e classe de cor.
-// Isso permite mostrar diferentes métricas do sistema de forma visual e organizada.
-
-// O componente foi projetado como reutilizável e parametrizável, 
-// utilizando @Input para receber dados dinamicamente.

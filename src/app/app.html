@@ -5,14 +5,14 @@
       <p>{{ modoRegisto ? 'Crie a sua nova conta.' : 'Bem-vindo, por favor, faça o login.' }}</p>
     
       <div class="login-form">
-        <input [(ngModel)]="usuarioLogin" placeholder="Utilizador">
+        <input [(ngModel)]="utilizadorLogin" placeholder="Utilizador">
         <input [(ngModel)]="senhaLogin" type="password" placeholder="Senha">
         
         @if (!modoRegisto) {
           <button (click)="fazerLogin()" class="btn-login">Entrar</button>
           <p class="toggle-auth">Ainda não tem conta? <a (click)="modoRegisto = true">Registe-se</a></p>
         } @else {
-          <button (click)="criarConta()" class="btn-login" style="background-color: #27ae60;">Finalizar Registo</button>
+          <button (click)="criarConta()" class="btn-login" style="background-color: #8bddac;">Finalizar Registo</button>
           <p class="toggle-auth">Já tem conta? <a (click)="modoRegisto = false">Voltar ao Login</a></p>
         }
       </div>
@@ -43,8 +43,8 @@
         </a>
 
         <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 10px;">
-          <a (click)="sair()" class="nav-link" style="color: #ff7675; cursor: pointer;">
-            🚪 Sair do Sistema
+          <a (click)="sair()" class="nav-link" style="color: #ffffff; cursor: pointer;">
+            ✖️ Sair do Sistema
           </a>
         </div>
       </nav>
@@ -58,7 +58,7 @@
       </div>
 
       <header style="margin-bottom: 30px;">
-        <h1>{{ nomeUsuario | saudacao }}</h1>
+        <h1>{{ nomeutilizador | saudacao }}</h1>
         <h3>Bem-vinda a pagina de gestao de processos que sao administrados por si.</h3>
       </header>
 

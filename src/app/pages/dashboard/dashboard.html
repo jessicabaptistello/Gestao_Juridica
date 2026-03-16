@@ -1,6 +1,6 @@
 <section class="kpi-row">
   <div class="kpi kpi-total">
-    <div class="kpi-title">TOTAL DE PROCESSOS</div>  <!--Mostra o título do indicador.-->
+    <div class="kpi-title">TOTAL DE PROCESSOS</div>  
     <div class="kpi-value">{{ total }}</div>
   <!--  <div class="kpi-sub">Soma total registada</div> -->
   </div>
@@ -24,7 +24,6 @@
   </div>
 </section>
 
-<!-- destaque do último processo criado -->
 <section class="card destaque" *ngIf="ultimoProcesso">
   <h2>Último processo adicionado</h2>
   <div class="destaque-info">
@@ -153,46 +152,3 @@
     </footer>
   </article>
 </section>
-
-<!--Resumo geral (bom para apresentar)
-
-Este código cria um dashboard de processos jurídicos com:
-
-1️⃣ Indicadores (KPIs)
-
-Mostram:
-Total de processos
-Processos novos
-Processos ativos
-Processos concluídos
-
-2️⃣ Destaque do último processo
-Mostra:
-cliente
-tipo
-status
-link para detalhes
-
-3️⃣ Colunas de processos
-
-Cada coluna mostra:
-
-processos novos
-processos ativos
-processos concluídos
-
-Com:
-máximo de 3 processos
-link para detalhe
-botão para ver lista completa
-
-💡 Conceitos Angular usados nesse código
-
-Interpolação → {{ }}
-
-Diretiva *ngIf
-Diretiva *ngFor
-Pipes → slice
-Router → [routerLink]
-
-QueryParams → filtros na URL-->
