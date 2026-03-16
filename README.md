@@ -161,7 +161,7 @@ cd projetoFinal
 
 ---
 
-# ▶️ Executar Localmente
+#  Executar Localmente
 
 ## 3️⃣ Instalar dependências
 
@@ -225,7 +225,7 @@ src/
 
 ---
 
-# 📋 Requisitos Técnicos Implementados
+#  Requisitos Técnicos Implementados
 
 ✔️ Interfaces tipadas
 ✔️ Services com Injeção de Dependência
