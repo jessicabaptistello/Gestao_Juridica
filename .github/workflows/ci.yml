@@ -21,10 +21,10 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Inject Secrets
+      -- name: Inject Secrets
         run: |
-          sed -i "s|SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.ts
-          sed -i "s|SUPABASE_KEY_PLACEHOLDER|${{ secrets.SUPABASE_KEY }}|g" src/environments/environment.ts
+          sed -i "s|SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.development.ts
+          sed -i "s|SUPABASE_KEY_PLACEHOLDER|${{ secrets.SUPABASE_KEY }}|g" src/environments/environment.development.ts
 
       - name: Build
         run: npx ng build --configuration production --base-href /Gestao_Juridica/
