@@ -27,7 +27,7 @@ A aplicação utiliza:
 
 Aplicação online:
 
-XXXX
+https://jessicabaptistello.github.io/Gestao_Juridica/
 
 ---
 
@@ -148,7 +148,7 @@ Vantagens:
 ## 1️⃣ Clonar repositório
 
 ```bash
-git clone XXX
+git clone https://github.com/jessicabaptistello/Gestao_Juridica
 ```
 
 ---
