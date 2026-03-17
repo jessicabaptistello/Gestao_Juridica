@@ -3,7 +3,7 @@ name: CI/CD - Build e Deploy
 on:
   push:
     branches: [ main ]
-  pull_request: # Requisito Item 3 do Checklist
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      -- name: Inject Secrets
+      - name: Inject Secrets
         run: |
           sed -i "s|SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.development.ts
           sed -i "s|SUPABASE_KEY_PLACEHOLDER|${{ secrets.SUPABASE_KEY }}|g" src/environments/environment.development.ts
