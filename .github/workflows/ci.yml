@@ -1,27 +1,29 @@
-name: CI - Verificacao
+name: CI/CD - Build e Deploy
 
 on:
   push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+    branches: [ main ] # O deploy automático será feito apenas pela main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 # Atualizado para v4
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v4 # Atualizado para v4
+        uses: actions/setup-node@v4
         with:
-          node-version: 22 # Versão estável mais recente
+          node-version: 22
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
       - name: Build
-        run: npm run build
+        run: npx ng build --configuration production
 
-        
+      - name: Deploy 
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/projeto-juridico/browser # Onde o Angular guarda o site
+          branch: gh-pages # A branch que o GitHub Pages vai ler
