@@ -26,18 +26,18 @@ A aplicação utiliza:
  
 #  Demonstração
  
-[cite_start]Aplicação online e funcional numa URL pública conforme os requisitos[cite: 18]:
+
 🔗 [https://jessicabaptistello.github.io/Gestao_Juridica/](https://jessicabaptistello.github.io/Gestao_Juridica/)
  
 ---
 
-# [cite_start] CI/CD e Segurança (Checklist de Sobrevivência) [cite: 1]
+# CI/CD e Segurança 
 
 Para cumprir os requisitos de defesa, o projeto implementa:
-* [cite_start]**CI (Integração Contínua):** GitHub Actions executa lint e build automaticamente em cada Pull Request[cite: 11, 12].
-* [cite_start]**Deploy Automático:** Ao fazer merge na branch `main`, a aplicação é atualizada online automaticamente[cite: 13, 15].
-* [cite_start]**Segurança de Dados:** As chaves do Supabase (URL/Key) estão protegidas em **GitHub Secrets**, não existindo segredos expostos no código fonte.
-* [cite_start]**Versionamento:** Repositório organizado com branch `main` protegida e Pull Requests obrigatórios[cite: 5, 6, 9].
+* **CI (Integração Contínua):** GitHub Actions executa lint e build automaticamente em cada Pull Request.
+* **Deploy Automático:** Ao fazer merge na branch `main`, a aplicação é atualizada online automaticamente.
+* **Segurança de Dados:** As chaves do Supabase (URL/Key) estão protegidas em **GitHub Secrets**, não existindo segredos expostos no código fonte.
+* **Versionamento:** Repositório organizado com branch `main` protegida e Pull Requests obrigatórios.
 
 ---
 
@@ -46,8 +46,8 @@ Para cumprir os requisitos de defesa, o projeto implementa:
 * Angular (v22)
 * TypeScript (Strict Mode)
 * HTML5 / CSS3
-* [cite_start]Supabase (Base de dados real )
-* [cite_start]Docker & Dockerfile 
+* Supabase (Base de dados real )
+* Docker & Dockerfile 
 * GitHub Actions (CI/CD)
  
 ---
@@ -68,15 +68,14 @@ Para cumprir os requisitos de defesa, o projeto implementa:
  
 ---
  
-# [cite_start]🐳 Utilização de Docker (Requisito 6) [cite: 19]
+# 🐳 Utilização de Docker (Requisito 6) 
  
-[cite_start]O projeto inclui suporte a **Docker**, permitindo construir e executar a aplicação num ambiente isolado[cite: 22]:
+O projeto inclui suporte a **Docker**, permitindo construir e executar a aplicação num ambiente isolado:
 
 ```bash
 docker build -t projeto-juridico . && docker run -p 4200:80 projeto-juridico
 
-
-Instalação e Execução Local (Item 9) 
+Instalação e Execução Local 
 
 1) Clonar repositório:
 
