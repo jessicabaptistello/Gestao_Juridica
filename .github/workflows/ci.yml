@@ -3,6 +3,8 @@ name: CI/CD - Build e Deploy
 on:
   push:
     branches: [ main ]
+  pull_request: # Requisito Item 3 do Checklist
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -19,13 +21,17 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Inject Secrets
+        run: |
+          sed -i "s|SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.ts
+          sed -i "s|SUPABASE_KEY_PLACEHOLDER|${{ secrets.SUPABASE_KEY }}|g" src/environments/environment.ts
+
       - name: Build
-        
         run: npx ng build --configuration production --base-href /Gestao_Juridica/
 
-      - name: Deploy 
+      - name: Deploy 🚀
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          
           folder: dist/projeto-juridico/browser
           branch: gh-pages
