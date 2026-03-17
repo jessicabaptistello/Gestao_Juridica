@@ -113,6 +113,6 @@ npm start
 
 ---
 
-## 📄 Licença
+##  Licença
 
 Projeto académico desenvolvido no âmbito da UFCD **Integração de Processos**.
