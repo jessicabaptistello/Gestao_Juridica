@@ -29,7 +29,10 @@ jobs:
       - name: Build
         run: npx ng build --configuration production --base-href /Gestao_Juridica/
 
-      - name: Deploy 🚀
+      - name: Executar lint
+        run: npm run lint
+
+      - name: Deploy 
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
