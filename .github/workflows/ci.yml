@@ -21,6 +21,9 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Run Lint
+        run: npx ng lint
+
       - name: Inject Secrets
         run: |
           sed -i "s|SUPABASE_URL_PLACEHOLDER|${{ secrets.SUPABASE_URL }}|g" src/environments/environment.development.ts
@@ -28,9 +31,6 @@ jobs:
 
       - name: Build
         run: npx ng build --configuration production --base-href /Gestao_Juridica/
-
-      - name: Executar lint
-        run: npm run lint
 
       - name: Deploy 
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
