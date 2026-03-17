@@ -20,12 +20,12 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build
-        # O --base-href garante que o site encontre os ficheiros na subpasta do GitHub
+        
         run: npx ng build --configuration production --base-href /Gestao_Juridica/
 
-      - name: Deploy 🚀
+      - name: Deploy 
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          # ATENÇÃO: Verifique se o nome da pasta em 'dist' é exatamente 'projeto-juridico'
+          
           folder: dist/projeto-juridico/browser
           branch: gh-pages

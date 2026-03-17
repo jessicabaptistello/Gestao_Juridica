@@ -236,7 +236,6 @@ select {
   cursor: pointer;
 }
 
-/* opção */
 select option {
   background-color: #ffffff;
   color: #000000;
