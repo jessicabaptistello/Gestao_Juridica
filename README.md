@@ -68,14 +68,16 @@ Para cumprir os requisitos de defesa, o projeto implementa:
  
 ---
  
-# 🐳 Utilização de Docker (Requisito 6) 
+# 🐳 Utilização de Docker 
  
 O projeto inclui suporte a **Docker**, permitindo construir e executar a aplicação num ambiente isolado:
 
 ```bash
 docker build -t projeto-juridico . && docker run -p 4200:80 projeto-juridico
 
-Instalação e Execução Local 
+---
+
+# Instalação e Execução Local 
 
 1) Clonar repositório:
 
@@ -89,7 +91,8 @@ npm install --legacy-peer-deps
 
 npm start
 
-📌 Requisitos Técnicos Implementados (Resumo):
+#  Requisitos Técnicos Implementados (Resumo):
+
 ✔️ Repositório organizado
 ✔️ Branch main protegida com PR obrigatório
 ✔️ Pipeline CI/CD sem erros (Lint/Build)
