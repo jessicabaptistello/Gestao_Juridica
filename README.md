@@ -1,3 +1,7 @@
+[![CI/CD - Build e Deploy](https://github.com/jessicabaptistello/Gestao_Juridica/actions/workflows/ci.yml/badge.svg)](https://github.com/jessicabaptistello/Gestao_Juridica/actions/workflows/ci.yml)
+
+
+
 #  Projeto: Gestão de Processos Jurídicos
 
 **Aluno:** Jessica Baptistello  
