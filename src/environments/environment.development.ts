@@ -1,6 +1,6 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:3001', 
-  supabaseUrl: 'https://oqmmsauagcnicciwhxua.supabase.co',
-  supabaseKey: 'sb_publishable_FreB5aqytzKRwt4ThoHQCQ_shKRiIX9'
+  production: true, 
+  apiUrl: 'https://jessicabaptistello.github.io/Gestao_Juridica', 
+  supabaseUrl: 'SUPABASE_URL_PLACEHOLDER',
+  supabaseKey: 'SUPABASE_KEY_PLACEHOLDER'
 };
