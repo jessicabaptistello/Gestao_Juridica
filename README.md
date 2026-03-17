@@ -1,104 +1,96 @@
-# Projeto: Gestão de Processos Jurídicos
- 
-**Aluno:** Jessica Baptistello
-**UFCD:** Integração de Processos
-**Framework:** Angular
-**Linguagem:** TypeScript
- 
----
- 
-#  Descrição
- 
-Este projeto consiste numa **Single Page Application (SPA)** desenvolvida em **Angular**, que simula um sistema pessoal de **Gestão de Processos Jurídicos e Administrativos**.
- 
-A aplicação permite **registar, visualizar, editar e remover processos jurídicos e administrativos**, facilitando a organização e acompanhamento da situação dos clientes.
- 
-O sistema foi desenvolvido seguindo **boas práticas de arquitetura**, **componentização**, **separação de responsabilidades** e **tipagem forte com TypeScript**.
- 
-A aplicação utiliza:
- 
-* **Supabase** como backend para armazenamento e gestão de dados reais
-* **Docker** para padronizar e facilitar a execução do ambiente
-* **GitHub Actions** para Integração Contínua (CI) e Deploy automático
-* **Services Angular** para gestão de estado e comunicação com a base de dados
- 
----
- 
-#  Demonstração
- 
+Projeto: Gestão de Processos Jurídicos
+Aluno: Jessica Baptistello
+UFCD: Integração de Processos
+Framework: Angular
+Linguagem: TypeScript
 
-🔗 [https://jessicabaptistello.github.io/Gestao_Juridica/](https://jessicabaptistello.github.io/Gestao_Juridica/)
- 
----
+ Descrição
+Este projeto consiste numa Single Page Application (SPA) desenvolvida em Angular, que simula um sistema pessoal de Gestão de Processos Jurídicos e Administrativos. A aplicação permite registar, visualizar, editar e remover processos, facilitando a organização e acompanhamento da situação dos clientes.
 
-# CI/CD e Segurança 
+O sistema utiliza:
 
+Supabase: Backend para armazenamento e gestão de dados reais.
+
+Docker: Padronização e execução do ambiente em contentores.
+
+GitHub Actions: Automação de Integração Contínua (CI) e Deploy.
+
+Services Angular: Gestão de estado e comunicação com a base de dados.
+
+ Demonstração em Produção
+Conforme os requisitos do projeto, a aplicação está disponível e funcional em:
+🔗 https://jessicabaptistello.github.io/Gestao_Juridica/
+
+ CI/CD e Segurança (Checklist de Sobrevivência)
 Para cumprir os requisitos de defesa, o projeto implementa:
-* **CI (Integração Contínua):** GitHub Actions executa lint e build automaticamente em cada Pull Request.
-* **Deploy Automático:** Ao fazer merge na branch `main`, a aplicação é atualizada online automaticamente.
-* **Segurança de Dados:** As chaves do Supabase (URL/Key) estão protegidas em **GitHub Secrets**, não existindo segredos expostos no código fonte.
-* **Versionamento:** Repositório organizado com branch `main` protegida e Pull Requests obrigatórios.
 
----
+CI (Integração Contínua): GitHub Actions executa lint e build automaticamente em cada Pull Request.
 
-#  Tecnologias Utilizadas
- 
-* Angular (v22)
-* TypeScript (Strict Mode)
-* HTML5 / CSS3
-* Supabase (Base de dados real )
-* Docker & Dockerfile 
-* GitHub Actions (CI/CD)
- 
----
- 
-#  Funcionalidades
- 
-## Dashboard
-* Total de processos registados, ativos e concluídos.
-* Visualização do processo mais recente.
- 
-## Listagem de Processos
-* Lista dinâmica com `*ngFor` e filtros por estado.
-* Pesquisa por nome, número ou tipo de processo.
- 
-## Criação e Edição
-* Utilização de **Reactive Forms** com validações.
-* Feedback visual de erros e campos obrigatórios.
- 
----
- 
-# 🐳 Utilização de Docker 
- 
-O projeto inclui suporte a **Docker**, permitindo construir e executar a aplicação num ambiente isolado:
+Deploy Automático: Ao fazer merge na branch main, a aplicação é atualizada online automaticamente.
 
-```bash
-docker build -t projeto-juridico . && docker run -p 4200:80 projeto-juridico
+Segurança de Dados: As chaves do Supabase estão protegidas em GitHub Secrets, sem segredos expostos no código.
 
----
+Versionamento: Repositório organizado com branch main protegida e Pull Requests obrigatórios.
 
-# Instalação e Execução Local 
+ Tecnologias Utilizadas
+Angular (v22)
 
-1) Clonar repositório:
+TypeScript
 
-git clone [https://github.com/jessicabaptistello/Gestao_Juridica](https://github.com/jessicabaptistello/Gestao_Juridica)
+HTML5 / CSS3
 
-2) Instalar dependências:
+Supabase 
 
+Docker & Dockerfile
+
+GitHub Actions (CI/CD)
+
+Funcionalidades
+Dashboard
+Total de processos registados, ativos e concluídos.
+
+Visualização do processo mais recente adicionado.
+
+Listagem de Processos
+Lista dinâmica com filtros por estado e pesquisa por nome ou número.
+
+Criação e Edição
+Utilização de Reactive Forms com validações e feedback visual de erros.
+
+ Utilização de Docker
+O projeto inclui suporte a Docker para execução num ambiente isolado:
+
+Bash
+# Construir a imagem
+docker build -t projeto-juridico .
+
+# Executar o container
+docker run -p 4200:80 projeto-juridico
+
+Instalação e Execução Local
+Clonar repositório:
+git clone https://github.com/jessicabaptistello/Gestao_Juridica
+
+Instalar dependências:
 npm install --legacy-peer-deps
 
-3) Executar aplicação:
-
+Executar aplicação:
 npm start
 
-#  Requisitos Técnicos Implementados (Resumo):
+Requisitos Técnicos Implementados (Resumo)
+[x] Repositório GitHub organizado.
 
-✔️ Repositório organizado
-✔️ Branch main protegida com PR obrigatório
-✔️ Pipeline CI/CD sem erros (Lint/Build)
-✔️ Dockerfile funcional no repositório
-✔️ Secrets protegidos no GitHub
-✔️ Aplicação com dados reais do Supabase
+[x] Branch main protegida com PR obrigatório.
 
-Licença
-Projeto académico desenvolvido no âmbito da UFCD Integração de Processos.
+[x] Pipeline CI/CD funcional em Pull Requests.
+
+[x] Deploy automático após merge na main.
+
+[x] Dockerfile funcional no repositório.
+
+[x] Secrets protegidos no GitHub.
+
+[x] Dados reais via Supabase.
+
+
+Licença: Projeto académico desenvolvido no âmbito da UFCD Integração de Processos.
