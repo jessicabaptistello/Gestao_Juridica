@@ -1,18 +1,31 @@
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: angular_frontend
-    ports:
-      - "${APP_PORT}:80"
-    depends_on:
-      - api
-  api:
-    image: clue/json-server
-    container_name: mock_api
-    ports:
-      - "${API_PORT:-3001}:80"
-    volumes:
-      - ./mock-api:/data
-   
+name: CI/CD - Build e Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build
+        # O --base-href garante que o site encontre os ficheiros na subpasta do GitHub
+        run: npx ng build --configuration production --base-href /Gestao_Juridica/
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # ATENÇÃO: Verifique se o nome da pasta em 'dist' é exatamente 'projeto-juridico'
+          folder: dist/projeto-juridico/browser
+          branch: gh-pages
