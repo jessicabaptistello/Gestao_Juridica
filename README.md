@@ -1,6 +1,8 @@
 [![CI/CD - Build e Deploy](https://github.com/jessicabaptistello/Gestao_Juridica/actions/workflows/ci.yml/badge.svg)](https://github.com/jessicabaptistello/Gestao_Juridica/actions/workflows/ci.yml)
 
-
+![Angular](https://img.shields.io/badge/Angular-21.2.0-emerald?logo=angular&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-blueviolet?logo=supabase&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-brightgreen?logo=docker&logoColor=white)
 
 #  Projeto: Gestão de Processos Jurídicos
 
