@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   nomeutilizador = '';
   
   listaDeProcessos: Processo[] = [];
-/*
+
   ngOnInit() {
 
     this.carregarDados();
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
     this.processoService.processos$.subscribe(p => {
       this.listaDeProcessos = p;
     });
-  } */
+  } 
 
   exportarJSON() {
     const blob = this.processoService.exportarJsonBlob();
@@ -147,3 +147,4 @@ export class AppComponent implements OnInit {
   }
 }
 
+Let teste = 123;
