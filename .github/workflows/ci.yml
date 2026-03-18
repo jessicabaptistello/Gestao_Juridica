@@ -41,7 +41,6 @@ jobs:
           branch: gh-pages
 
   docker-push:
-    
     needs: build-and-deploy
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -60,12 +59,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-     - name: Build and push Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          
           tags: ghcr.io/jessicabaptistello/gestao_juridica:latest
           build-args: |
             SUPABASE_URL=${{ secrets.SUPABASE_URL }}
