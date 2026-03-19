@@ -146,3 +146,5 @@ export class AppComponent implements OnInit {
     window.URL.revokeObjectURL(url);
   }
 }
+
+let teste = 123;
